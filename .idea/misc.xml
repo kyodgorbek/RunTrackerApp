@@ -6,12 +6,14 @@
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/drawable/ic_directions_run_black_24dp.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/drawable/ic_pause_black_24dp.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/drawable/ic_run.xml" value="0.1" />
+        <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/activity_main.xml" value="0.23777173913043478" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/fragment_run.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/fragment_setup.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/fragment_statistics.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/fragment_tracking.xml" value="0.1" />
         <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/layout/item_run.xml" value="0.1" />
+        <entry key="..\:/Users/Yodgorbek/RunTrackerApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.5126953125" />
       </map>
     </option>
   </component>
