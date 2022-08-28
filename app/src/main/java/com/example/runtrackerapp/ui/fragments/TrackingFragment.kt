@@ -1,5 +1,6 @@
 package com.example.runtrackerapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.runtrackerapp.databinding.FragmentTrackingBinding
+import com.example.runtrackerapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
+import com.example.runtrackerapp.services.TrackingService
 import com.example.runtrackerapp.ui.viewmodels.MainViewModel
 import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,11 +36,19 @@ class TrackingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.mapView.onCreate(savedInstanceState)
-
+        binding.btnToggleRun.setOnClickListener {
+            sendCommandToService(ACTION_START_OR_RESUME_SERVICE)
+        }
         binding.mapView.getMapAsync {
             map = it
         }
     }
+
+    private fun sendCommandToService(action: String) =
+        Intent(requireContext(), TrackingService::class.java).also {
+            it.action = action
+            requireContext().startService(it)
+        }
 
     override fun onResume() {
         super.onResume()
@@ -68,5 +79,6 @@ class TrackingFragment : Fragment() {
         super.onSaveInstanceState(outState)
         binding.mapView?.onSaveInstanceState(outState)
     }
+
 
 }

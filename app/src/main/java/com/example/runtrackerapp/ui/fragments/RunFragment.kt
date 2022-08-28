@@ -44,20 +44,20 @@ class RunFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    private fun requestPermissions(){
-        if(TrackingUtility.hasLocationPermissions(requireContext())){
+    private fun requestPermissions() {
+        if (TrackingUtility.hasLocationPermissions(requireContext())) {
             return
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             EasyPermissions.requestPermissions(
-this,
+                this,
                 "You need  to accept  location permissions to use this app",
                 REQUEST_CODE_LOCATION_PERMISSION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
 
             )
-        }else{
+        } else {
             EasyPermissions.requestPermissions(
                 this,
                 "You need  to accept  location permissions to use this app",
@@ -71,7 +71,7 @@ this,
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         } else {
             requestPermissions()
