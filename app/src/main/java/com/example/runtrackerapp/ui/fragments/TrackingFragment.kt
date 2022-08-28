@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.runtrackerapp.databinding.FragmentTrackingBinding
 import com.example.runtrackerapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
+import com.example.runtrackerapp.services.Polyline
 import com.example.runtrackerapp.services.TrackingService
 import com.example.runtrackerapp.ui.viewmodels.MainViewModel
 import com.google.android.gms.maps.GoogleMap
@@ -21,6 +22,9 @@ class TrackingFragment : Fragment() {
     private var _binding: FragmentTrackingBinding? = null
     private val binding get() = _binding!!
     private var map: GoogleMap? = null
+    private var isTracking = false
+    private var pathPoints = mutableListOf<Polyline>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
