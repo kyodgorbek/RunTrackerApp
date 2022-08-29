@@ -33,6 +33,9 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 typealias Polyline = MutableList<LatLng>
 typealias Polylines = MutableList<Polyline>
@@ -42,7 +45,10 @@ class TrackingService : LifecycleService() {
     var isFirstRun = true
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    private val timeInRunSeconds= MutableLiveData<Long>()
+
     companion object {
+        val timeRunInMillis = MutableLiveData<Long>()
         val isTracking = MutableLiveData<Boolean>()
         val pathPoints = MutableLiveData<Polylines>()
     }
@@ -71,9 +77,11 @@ class TrackingService : LifecycleService() {
                         isFirstRun = false
                     } else
                         Timber.d("Resuming Service . . .")
+                    startForegroundService()
                 }
                 ACTION_PAUSE_SERVICE -> {
                     Timber.d("paused service")
+                    pauseService()
                 }
                 ACTION_STOP_SERVICE -> {
                     Timber.d("Stopped service")
@@ -83,9 +91,32 @@ class TrackingService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    private  var  isTimerEnabled = false
+    private  var lapTime  = 0L
+    private var timeRun = 0L
+    private var timeStarted = 0L
+    private var lastSecondTimestamp = 0L
+
+    private fun startTime(){
+        addEmptyPolyline()
+        isTracking.postValue(true)
+        timeStarted = System.currentTimeMillis()
+        isTimerEnabled = true
+        CoroutineScope(Dispatchers.Main).launch {
+            while (isTracking.value!!){
+                // time difference between now and timeStarted
+                lapTime = System.currentTimeMillis() - timeStarted
+            }
+        }
+    }
+
+    private fun pauseService(){
+        isTracking.postValue(false)
+    }
+
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(p0: LocationResult) {
-            super.onLocationResult(p0!!)
+            super.onLocationResult(p0)
             if (isTracking.value!!) {
                 p0?.locations?.let { locations ->
                     locations.forEach {
